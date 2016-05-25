@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>API Vagalume</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div id="divPesquisa" class="bg-1">
+            <div class="container">
+                <h1 class="text-center">CMM</h1>
+                <p class="text-center">Você pode procurar as letras das suas músicas prediletas e muitas outras coisas aqui!</p>    
+                <div class="row text-center">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-4" class="text-center">
+                        <div class="thumbnail" class="text-center">
+                            <p><strong>Artista/banda:</strong></p>
+                            <input type="text" class="form-control" id="digitaArtista">
+                        </div>
+                    </div>
+                    <div class="col-sm-4" class="text-center">
+                        <div class="thumbnail" class="text-center">
+                            <p><strong>Música:</strong></p>
+                            <input type="text" class="form-control" id="digitaMusica">
+                        </div>
+                    </div>
+                    <div class="col-sm-2" class="text-center"></div> 
+                </div>
+                <div class="row text-center">
+                    <div class="col-sm-10 text-center">
+                     <button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right" data-toggle="modal" data-target="">Pesquisar</button> 
+                    </div> 
+                    <div class="col-sm-2 text-center"></div>
+                </div>
+            </div>
+        </div>
+       
+    </body>
+</html>
