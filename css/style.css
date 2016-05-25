@@ -1,6 +1,7 @@
   body {
       font: 400 15px/1.8 Lato, sans-serif;
       color: #777;
+      background: #f2f2f2;
   }
   h3, h4 {
       margin: 10px 0 30px 0;
@@ -42,6 +43,7 @@
   .bg-1 h1 {color: #fff;}
   .bg-1 h3 {color: #fff;}
   .bg-1 p {font-style: italic;}
+
    .bg-2 {
       background: #f2f2f2;
       color: #000000;
