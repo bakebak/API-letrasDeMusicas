@@ -17,32 +17,34 @@
                 <h1 class="text-center">CMM</h1>
                 <p class="text-center">Você pode procurar as letras das suas músicas prediletas e muitas outras coisas aqui!</p>    
                 <div class="row text-center">
-                    <div class="col-sm-2">
-                    </div>
+                    <div class="col-sm-2"></div>
                     <div class="col-sm-4" class="text-center">
                         <div class="thumbnail" class="text-center">
                             <p><strong>Artista/banda:</strong></p>
-                            <input type="text" class="form-control" id="digitaArtista">
+                            <input type="text" class="form-control" placeholder="Digite o nome do artista que procura" id="digitaArtista">
                         </div>
                     </div>
                     <div class="col-sm-4" class="text-center">
                         <div class="thumbnail" class="text-center">
                             <p><strong>Música:</strong></p>
-                            <input type="text" class="form-control" id="digitaMusica">
+                            <input type="text" class="form-control" placeholder="Digite o nome da música que procura" id="digitaMusica">
                         </div>
                     </div>
                     <div class="col-sm-2" class="text-center"></div> 
                 </div>
                 <div class="row text-center">
                     <div class="col-sm-10 text-center">
-                     <button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right" data-toggle="modal" data-target="">Pesquisar</button> 
+                        <button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right" data-toggle="modal" data-target="">Pesquisar</button> 
                     </div> 
                     <div class="col-sm-2 text-center"></div>
                 </div>
             </div>
         </div>
-        <div id="tabela" class="bg-2">
-            <div class="container">
+        <div id="containerResultado" class="bg-2">
+            <div class="container" id="exibirTelaInicial">
+
+            </div>
+            <div class="container" id="exibirTabela">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -55,7 +57,11 @@
                         <tr>
                             <td>b</td>
                             <td></td>
-                            <td><span class="glyphicon glyphicon-plus-sign"></span></td>
+                            <td>
+                                <button type="button" class="btn btn-default btn-danger btn-sm" id="btnDetalhes">
+                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <td>b</td>
@@ -90,6 +96,73 @@
                     </tbody>
                 </table>
             </div>
+            <div id="exibirArtista">
+                <div class="row text-center">
+                    <h1 class="text-center">Artista/Banda</h1>
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-2 text-center">
+                        <div class="text-center">
+                            <p>Imagem</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <p><strong>Nome da música:</strong></p>
+                        <p><strong>ID do artista:</strong></p>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 text-center">
+                        <button type="button" class="btn btn-primary btn-danger btn-block" data-toggle="modal" data-target="#myModalLetra">Letra da música</button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <br>
+                <div class="row text-center">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary btn-danger btn-block">Todas as músicas</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary btn-danger btn-block">Albuns</button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <br>
+                <div class="row text-center">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <button type="button" id="btnVoltar" class="btn btn-primary btn-danger btn-block">Voltar</button>
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
+                <!-- Modal letra -->
+                <div class="modal fade" id="myModalLetra" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h4>Artista/Banda</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                   Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.~Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-danger btn-block">Tradução</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-remove"></span> Fechar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <script src="js/script.js"></script>
     </body>
 </html>
