@@ -1,6 +1,7 @@
 var host = {urlArtista:"https://www.vagalume.com.br/",
             urlArtistaNaoEncontrado:"https://api.vagalume.com.br/search.art?q=",
-            urlNomeMusica:"https://api.vagalume.com.br/search.excerpt?q="};
+            urlNomeMusica:"https://api.vagalume.com.br/search.excerpt?q=",
+            urlArtistaMusica:"https://api.vagalume.com.br/search.php?art="};
 
 
 $(document).ready(function(){
@@ -27,14 +28,14 @@ $(document).keypress(function(e) {
 function seleciona (){
     var entradaMusica = $("#digitaMusica").val();
     var entradaArtista = $("#digitaArtista").val();
-    if (entradaArtista !== "" && entradaMusica === ""){
-        chamaArtista();
+    if (entradaArtista !== "" && entradaMusica !== ""){
+        chamaArtistaEMusica;
     }
     else if (entradaArtista === "" && entradaMusica !== ""){
         chamaMusica();
     }
-    else if (entradaArtista !== "" && entradaMusica !== ""){
-        chamaArtistaEMusica;
+    else if (entradaArtista !== "" && entradaMusica === ""){
+        chamaArtista();
     }
 }
 
@@ -83,10 +84,24 @@ function chamaMusica() {
 }
 
 function chamaArtistaEMusica (){
+    var entradaMusica = $("#digitaMusica").val();
+    var entradaArtista = $("#digitaArtista").val();
 
+    var entradaComHifen = entradaArtista.replace(/ /gi, "-");
+    var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={key}", function (list){
+        var artista = '';
+        var musica = '';
+        artista += list.art.name;
+        musica += list.mus.name;
+        console.log(artista);
+        console.log(musica);
+        $("#telaResultado").html(artista+musica);
+    })
 }
 
 function telaInicial() {
     $("#exibirTabela").hide();  
     $("#exibirArtista").hide();
+
 }
