@@ -9,7 +9,11 @@ function setaValores(){
     var entradaComHifen = entradaArtista.replace(/ /gi, "-");
     var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
     seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco);
-    
+    escreveLetra(entradaComHifen,entradaComEspaco);
+    $("#btnTraduzir").click(function(){
+        $("#telaLetraDaMusica").html('');
+        escreveLetraTraduzida(entradaComHifen,entradaComEspaco);
+    }); 
 }
 
 function seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco){
@@ -25,28 +29,14 @@ function seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEsp
 }
 
 function chamaArtista (entradaComHifen){
-    console.log(entradaComHifen);
-    $.getJSON(host.urlArtista+entradaComHifen+"/index.js", function (list){
-        var musicas = '';
-        var artista = '';
+   $.getJSON(host.urlArtistaNaoEncontrado+entradaComHifen+"&limit=5", function (list){
+        var banda = '';
         var i;
-        artista += list.artist.desc;
-        for(i=0; i < list.artist.toplyrics.item.length; i++){
-            musicas += list.artist.toplyrics.item[i].desc;
+        for(i=0; i < list.response.docs.length; i++){
+            banda += list.response.docs[i].band;
         }
-        $("#telaResultado").html(artista+musicas);
+        $("#telaResultado").html(banda);
     })
-    /*.fail(function() {
-       $.getJSON(host.urlArtistaNaoEncontrado+entradaComHifen+"&limit=5", function (list){
-            var banda = '';
-            var i;
-            for(i=0; i < list.docs.length; i++){
-                banda += list.docs[i].band;
-            }
-            $("#telaResultado").html(banda);
-            console.log(list);
-        })
-    })*/
 }
 
 function chamaMusica(entradaComEspaco) {
@@ -73,24 +63,41 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
         $("#telaResultado").html(artista+musica);
         $(".escreveNomeDaBanda").html(artista);
         $(".escreveNomeDaMusica").html(musica);
-        escreveLetra(list);
-        escreveLetraTraduzida(list);
-        $("#exibirArtista").show();
+    })
+    escreveLetra();
+    $("#exibirArtista").show();
+    
+}
+
+function escreveLetra(entradaComHifen,entradaComEspaco){
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
+        var letra = '';
+        letra += list.mus[0].text;
+        var letra = letra.replace(/\n/gi, "<br>");
+        $("#telaLetraDaMusica").html(letra);
     })
 }
 
-function escreveLetra(list){
-    var letra = '';
-    letra += list.mus[0].text;
-    var letra = letra.replace(/\n/gi, "<br>");
-    $("#telaLetraDaMusica").html(letra);
+function escreveLetraTraduzida(entradaComHifen,entradaComEspaco){
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
+        var letra = '';
+        letra += list.mus[0].translate[0].text;
+        var letra = letra.replace(/\n/gi, "<br>");
+        $("#telaLetraDaMusica").html(letra);
+    })
 }
 
-function escreveLetraTraduzida(list){
-    var letraTraduzida = '';
-    letraTraduzida += list.mus[0].translate[0].text;
-    var letraTraduzida = letraTraduzida.replace(/\n/gi, "<br>");
-    $("#telaLetraDaMusicaTraduzida").html(letraTraduzida);
+function listaMusicas(entradaComHifen){
+     $.getJSON(host.urlArtista+entradaComHifen+"/index.js", function (list){
+        var musicas = '';
+        var artista = '';
+        var i;
+        artista += list.artist.desc;
+        for(i=0; i < list.artist.toplyrics.item.length; i++){
+            musicas += list.artist.toplyrics.item[i].desc;
+        }
+        $("#telaResultado").html(artista+musicas);
+    })
 }
 
 function telaInicial() {
