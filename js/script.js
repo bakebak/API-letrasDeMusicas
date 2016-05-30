@@ -21,7 +21,7 @@ $(document).ready(function(){
 
 $(document).keypress(function(e) {
     if (e.which == 13) {
-        chamaArtista();
+         seleciona();
     }
 });
 
@@ -29,7 +29,7 @@ function seleciona (){
     var entradaMusica = $("#digitaMusica").val();
     var entradaArtista = $("#digitaArtista").val();
     if (entradaArtista !== "" && entradaMusica !== ""){
-        chamaArtistaEMusica;
+        chamaArtistaEMusica();
     }
     else if (entradaArtista === "" && entradaMusica !== ""){
         chamaMusica();
@@ -72,7 +72,6 @@ function chamaMusica() {
         var trecho = '';
         var artista = '';
         var i;
-        console.log(list);
         for(i=0; i < list.response.docs.length; i++){
             artista += list.response.docs[i].band;
         }
@@ -89,13 +88,11 @@ function chamaArtistaEMusica (){
 
     var entradaComHifen = entradaArtista.replace(/ /gi, "-");
     var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
-    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={key}", function (list){
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
         var artista = '';
         var musica = '';
         artista += list.art.name;
-        musica += list.mus.name;
-        console.log(artista);
-        console.log(musica);
+        musica += list.mus[0].name;
         $("#telaResultado").html(artista+musica);
     })
 }
@@ -103,5 +100,4 @@ function chamaArtistaEMusica (){
 function telaInicial() {
     $("#exibirTabela").hide();  
     $("#exibirArtista").hide();
-
 }
