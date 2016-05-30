@@ -63,10 +63,13 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
         $("#telaResultado").html(artista+musica);
         $(".escreveNomeDaBanda").html(artista);
         $(".escreveNomeDaMusica").html(musica);
+        $("#btnListaDeMusicas").click(function(){
+            listaMusicas(nomeArtista);
+        });
+        nomeArtista = artista;
     })
     escreveLetra();
     $("#exibirArtista").show();
-    
 }
 
 function escreveLetra(entradaComHifen,entradaComEspaco){
@@ -87,16 +90,16 @@ function escreveLetraTraduzida(entradaComHifen,entradaComEspaco){
     })
 }
 
-function listaMusicas(entradaComHifen){
-     $.getJSON(host.urlArtista+entradaComHifen+"/index.js", function (list){
-        var musicas = '';
-        var artista = '';
+function listaMusicas(nomeArtista){
+    var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
+    console.log(nomeArtistaComHifen);
+    $.getJSON(host.urlArtista+nomeArtistaComHifen+"/index.js", function (list){
         var i;
-        artista += list.artist.desc;
+        var musicas = '';
         for(i=0; i < list.artist.toplyrics.item.length; i++){
             musicas += list.artist.toplyrics.item[i].desc;
         }
-        $("#telaResultado").html(artista+musicas);
+        $("#telaResultado").html(nomeArtista+musicas);
     })
 }
 
@@ -114,7 +117,7 @@ $(document).ready(function(){
         $("#exibirTabela").hide();
         $("#exibirArtista").show();
     });
-       $("#btnVoltar").click(function(){
+    $("#btnVoltar").click(function(){
         telaInicial();
     });
 });
