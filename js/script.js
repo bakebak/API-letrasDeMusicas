@@ -3,45 +3,29 @@ var host = {urlArtista:"https://www.vagalume.com.br/",
             urlNomeMusica:"https://api.vagalume.com.br/search.excerpt?q=",
             urlArtistaMusica:"https://api.vagalume.com.br/search.php?art="};
 
-
-$(document).ready(function(){
-    telaInicial();
-    $("#btnPesquisar").click(function(){
-        seleciona();
-    });
-    $("#btnDetalhes").click(function(){
-        $("#exibirTabela").hide();
-        $("#exibirArtista").show();
-    });
-    $("#btnVoltar").click(function(){
-        telaInicial();
-    });
-    
-});
-
-$(document).keypress(function(e) {
-    if (e.which == 13) {
-         seleciona();
-    }
-});
-
-function seleciona (){
+function setaValores(){
     var entradaMusica = $("#digitaMusica").val();
     var entradaArtista = $("#digitaArtista").val();
+    var entradaComHifen = entradaArtista.replace(/ /gi, "-");
+    var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
+    seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco);
+    
+}
+
+function seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco){
     if (entradaArtista !== "" && entradaMusica !== ""){
-        chamaArtistaEMusica();
+        chamaArtistaEMusica(entradaComHifen, entradaComEspaco);
     }
     else if (entradaArtista === "" && entradaMusica !== ""){
-        chamaMusica();
+        chamaMusica(entradaComEspaco);
     }
     else if (entradaArtista !== "" && entradaMusica === ""){
-        chamaArtista();
+        chamaArtista(entradaComHifen);
     }
 }
 
-function chamaArtista (){
-    var entradaArtista = $("#digitaArtista").val();
-    var entradaComHifen = entradaArtista.replace(/ /gi, "-");
+function chamaArtista (entradaComHifen){
+    console.log(entradaComHifen);
     $.getJSON(host.urlArtista+entradaComHifen+"/index.js", function (list){
         var musicas = '';
         var artista = '';
@@ -60,14 +44,12 @@ function chamaArtista (){
                 banda += list.docs[i].band;
             }
             $("#telaResultado").html(banda);
-            console.log(banda);
+            console.log(list);
         })
     })*/
 }
 
-function chamaMusica() {
-    var entradaMusica = $("#digitaMusica").val();
-    var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
+function chamaMusica(entradaComEspaco) {
     $.getJSON(host.urlNomeMusica+entradaComEspaco+"&limit=5", function (list){
         var trecho = '';
         var artista = '';
@@ -82,22 +64,56 @@ function chamaMusica() {
     })
 }
 
-function chamaArtistaEMusica (){
-    var entradaMusica = $("#digitaMusica").val();
-    var entradaArtista = $("#digitaArtista").val();
-
-    var entradaComHifen = entradaArtista.replace(/ /gi, "-");
-    var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
+function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
     $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
         var artista = '';
         var musica = '';
         artista += list.art.name;
         musica += list.mus[0].name;
         $("#telaResultado").html(artista+musica);
+        $(".escreveNomeDaBanda").html(artista);
+        $(".escreveNomeDaMusica").html(musica);
+        escreveLetra(list);
+        escreveLetraTraduzida(list);
+        $("#exibirArtista").show();
     })
+}
+
+function escreveLetra(list){
+    var letra = '';
+    letra += list.mus[0].text;
+    var letra = letra.replace(/\n/gi, "<br>");
+    $("#telaLetraDaMusica").html(letra);
+}
+
+function escreveLetraTraduzida(list){
+    var letraTraduzida = '';
+    letraTraduzida += list.mus[0].translate[0].text;
+    var letraTraduzida = letraTraduzida.replace(/\n/gi, "<br>");
+    $("#telaLetraDaMusicaTraduzida").html(letraTraduzida);
 }
 
 function telaInicial() {
     $("#exibirTabela").hide();  
     $("#exibirArtista").hide();
 }
+
+$(document).ready(function(){
+    telaInicial();
+    $("#btnPesquisar").click(function(){
+        setaValores();
+    });
+    $("#btnDetalhes").click(function(){
+        $("#exibirTabela").hide();
+        $("#exibirArtista").show();
+    });
+       $("#btnVoltar").click(function(){
+        telaInicial();
+    });
+});
+
+$(document).keypress(function(e) {
+    if (e.which == 13) {
+         setaValores();
+    }
+});

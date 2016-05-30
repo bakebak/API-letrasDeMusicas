@@ -99,15 +99,10 @@
             </div>
             <div id="exibirArtista">
                 <div class="row text-center">
-                    <h1 class="text-center">Artista/Banda</h1>
+                    <h1 class="text-center"><div class="escreveNomeDaBanda"></div></h1>
                     <div class="col-sm-4"></div>
-                    <div class="col-sm-2 text-center">
-                        <div class="text-center">
-                            <p>Imagem</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 text-center">
-                        <p><strong>Nome da música:</strong></p>
+                    <div class="col-sm-5 text-center">
+                        <p><strong>Nome da música: </strong><div class="escreveNomeDaMusica"></div></p>
                         <p><strong>ID do artista:</strong></p>
                     </div>
                     <div class="col-sm-3"></div>
@@ -115,7 +110,7 @@
                 <div class="row text-center">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4 text-center">
-                        <button type="button" class="btn btn-primary btn-danger btn-block" data-toggle="modal" data-target="#myModalLetra">Letra da música</button>
+                        <button type="button" class="btn btn-primary btn-danger btn-block" data-toggle="modal" data-target="#ModalLetra">Letra da música</button>
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
@@ -139,19 +134,45 @@
                     <div class="col-sm-5"></div>
                 </div>
                 <!-- Modal letra -->
-                <div class="modal fade" id="myModalLetra" role="dialog">
+                <div class="modal fade" id="ModalLetra" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h4>Artista/Banda</h4>
+                                <div class="escreveNomeDaBanda"></div>
+                                <div class="escreveNomeDaMusica"></div>
                             </div>
                             <div class="modal-body">
                                 <div class="text-center">
-                                   Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.~Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+                                   <div id="telaLetraDaMusica"></div>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn btn-danger btn-block">Tradução</button>
+                                    <button type="submit" id="btnTraduzir" class="btn btn-danger btn-block" data-toggle="modal" data-target="#ModalLetraTraduzida">Tradução</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-remove"></span> Fechar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Letra Traduzida -->
+                <div class="modal fade" id="ModalLetraTraduzida" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <div class="escreveNomeDaBanda"></div>
+                                <div class="escreveNomeDaMusica"></div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                   <div id="telaLetraDaMusicaTraduzida"></div>
+                                </div>
+                                <div>
+                                    <button type="submit" id="btnTraduzir" class="btn btn-danger btn-block" data-toggle="modal" data-target="#ModalLetra">Original</button>
                                 </div>
                             </div>
                             <div class="modal-footer">
