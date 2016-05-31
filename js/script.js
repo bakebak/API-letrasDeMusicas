@@ -97,7 +97,6 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
             $("#telaLetraDaMusica").html('');
             escreveLetraTraduzida(entradaComHifen,entradaComEspaco);
         }); 
-        //modalAlbum(nomeArtista,artista); 
     })
     escreveLetra(entradaComHifen,entradaComEspaco);
     $("#exibirTabela").hide();
@@ -141,7 +140,7 @@ function listaAlbuns (nomeArtista){
          var i;
          var albuns = '';
         for(i=0; i < list.discography.item.length; i++){
-            albuns += '<tr><td>' + list.discography.item[i].desc + '</td><td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></td></tr>';
+            albuns += '<tr><td>' + list.discography.item[i].desc + '</td><td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-type="albuns" data-album="' + nomeArtista + '"></span></td></tr>';
         }
         $("#corpoTabela").html(albuns);
         $("#headTabela").html("<tr><th>Albuns</th><th>Detalhes</th></tr>");
@@ -149,20 +148,22 @@ function listaAlbuns (nomeArtista){
     })
 }
 
-/*function modalAlbum (nomeArtista,artista){
+function modalAlbum (nomeArtista){
+    $("#ModalAlbum").modal("show")
     var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
+    console.log(nomeArtistaComHifen);
     $.getJSON(host.urlArtista+nomeArtistaComHifen+"/discografia/index.js", function (list){
-        var linkCapa = list.discography.item.cover
-        $("#capaAlbum").html("www.vagalume.com.br" + linkCapa);
-        $("#nomeGrupo").html(artista);
+        var linkCapa = list.discography.item[0].cover;
+        $("#capaAlbum").html("img src= 'www.vagalume.com.br'" + linkCapa);
         var i;
         var musicasAlbum = '';
-        for(i=0; i < list.discography.item.discs.length; i++){
+        for(i=0; i < list.discography.item.discs[0].length; i++){
             musicasAlbum += '<tr><td>' + list.discography.item.discs[i].desc + '</td></tr>';
         }
+          console.log(musicasAlbum);
         $("#musicasAlbum").html(musicasAlbum);
     })
-}*/
+}
 
 function telaInicial() {
     $("#exibirTabela").hide();  
@@ -191,6 +192,10 @@ $(document).ready(function(){
             var artista = $(this).data('artista');
             var musica = $(this).data('musica');
             chamaArtistaEMusica(artista, musica);
+        }
+        else if($(this).data('type')==='albuns'){
+            var album = $(this).data('album');
+            modalAlbum(album);
         }
     })
 
