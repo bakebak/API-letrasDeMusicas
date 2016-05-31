@@ -4,10 +4,31 @@ var host = {urlArtista:"https://www.vagalume.com.br/",
             urlArtistaMusica:"https://api.vagalume.com.br/search.php?art=",
             chave:"&apikey={4f136ef8868e60873283c355c01d4de8}"};
 
+function replaceSpecialChars(str)
+{
+    var i;
+    for(i=0; i<str.length; i++){
+        str = str.replace(/[ÀÁÂÃÄÅ]/,"A");
+        str = str.replace(/[àáâãäå]/,"a");
+        str = str.replace(/[ÈÉÊË]/,"E");
+        str = str.replace(/[èéêë]/,"e");
+        str = str.replace(/[ìíî]/,"i");
+        str = str.replace(/[ÌÍÎ]/,"I");
+        str = str.replace(/[ÒÓÕÔ]/,"O");
+        str = str.replace(/[óòôõ]/,"o");
+        str = str.replace(/[ÙÚÛÜ]/,"U");
+        str = str.replace(/[ùúûü]/,"u");
+        str = str.replace(/[Ç]/,"C");
+        str = str.replace(/[ç]/,"c");
+    }
+    return str;
+}
+
 function setaValores(){
     var entradaMusica = $("#digitaMusica").val();
     var entradaArtista = $("#digitaArtista").val();
-    var entradaComHifen = entradaArtista.replace(/ /gi, "-");
+    var specialChars = replaceSpecialChars(entradaArtista);
+    var entradaComHifen = specialChars.replace(/ /gi, "-");
     var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
     seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco);
     escreveLetra(entradaComHifen,entradaComEspaco);
@@ -39,6 +60,7 @@ function chamaArtista (entradaComHifen){
         $("#corpoTabela").html(banda);
         $("#headTabela").html("<tr><th>Artista/Banda</th></tr>");
         $("#exibirTabela").show();
+        $("#exibirArtista").hide();
     })
 }
 
@@ -53,6 +75,7 @@ function chamaMusica(entradaComEspaco) {
         $("#corpoTabela").html(artistaETrecho);
         $("#headTabela").html("<tr><th>Artista/Banda</th><th>Músicas</th><th>Detalhes</th></tr>");
         $("#exibirTabela").show();
+        $("#exibirArtista").hide();
     })
 }
 
@@ -64,7 +87,10 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
         musica += list.mus[0].name;
         $(".escreveNomeDaBanda").html(artista);
         $(".escreveNomeDaMusica").html(musica);
-        nomeArtista = artista;
+        var nomeArtistaIncorreto = artista;
+        var specialChars = replaceSpecialChars(nomeArtistaIncorreto);
+        var nomeArtista = specialChars.replace(/ /gi, "-");
+        nomeArtista = nomeArtista.toLowerCase();
         $("#btnListaDeMusicas").click(function(){
             listaMusicas(nomeArtista);
         });
@@ -79,24 +105,22 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
 
 function escreveLetra(entradaComHifen,entradaComEspaco){
     $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+host.chave, function (list){
-        var letra = '';
-        letra += list.mus[0].text;
-        var letra = letra.replace(/\n/gi, "<br>");
+        var letra = list.mus[0].text;
+        letra = letra.replace(/\n/gi, "<br>");
         $("#telaLetraDaMusica").html(letra);
     })
 }
 
 function escreveLetraTraduzida(entradaComHifen,entradaComEspaco){
     $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+host.chave, function (list){
-        var letra = '';
-        letra += list.mus[0].translate[0].text;
-        var letra = letra.replace(/\n/gi, "<br>");
+        var letra = list.mus[0].translate[0].text;
+        letra = letra.replace(/\n/gi, "<br>");
         $("#telaLetraDaMusica").html(letra);
     })
 }
 
 function listaMusicas(nomeArtista){
-    var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
+    var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");;
     $.getJSON(host.urlArtista+nomeArtistaComHifen+"/index.js", function (list){
         var i;
         var todasMusicas = '';
