@@ -32,10 +32,6 @@ function setaValores(){
     var entradaComEspaco = entradaMusica.replace(/ /gi, "%20");
     seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco);
     escreveLetra(entradaComHifen,entradaComEspaco);
-    $("#btnTraduzir").click(function(){
-        $("#telaLetraDaMusica").html('');
-        escreveLetraTraduzida(entradaComHifen,entradaComEspaco);
-    }); 
 }
 
 function seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEspaco){
@@ -65,12 +61,12 @@ function chamaArtista (entradaComHifen){
 }
 
 function chamaMusica(entradaComEspaco) {
-    $.getJSON(host.urlNomeMusica+entradaComEspaco+"&limit=5", function (list){
+    $.getJSON(host.urlNomeMusica+entradaComEspaco+"&limit=10", function (list){
         var artistaETrecho = '';
         var i;
         for(i=0; i < list.response.docs.length; i++){
             artistaETrecho += '<tr><td>' + list.response.docs[i].band + '</td>';
-            artistaETrecho += '<td>' + list.response.docs[i].title + '</td><td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></td></tr>';
+            artistaETrecho += '<td>' + list.response.docs[i].title + '</td><td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-type="art&mus" data-art="' + list.response.docs[i].band + '" data-mus="' + list.response.docs[i].title + '"></span></td></tr>';
         }
         $("#corpoTabela").html(artistaETrecho);
         $("#headTabela").html("<tr><th>Artista/Banda</th><th>Músicas</th><th>Detalhes</th></tr>");
@@ -97,9 +93,13 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
         $("#btnAlbuns").click(function(){
             listaAlbuns(nomeArtista);
         });   
-        modalAlbum(nomeArtista,artista); 
+        $("#btnTraduzir").click(function(){
+            $("#telaLetraDaMusica").html('');
+            escreveLetraTraduzida(entradaComHifen,entradaComEspaco);
+        }); 
+        //modalAlbum(nomeArtista,artista); 
     })
-    escreveLetra();
+    escreveLetra(entradaComHifen,entradaComEspaco);
     $("#exibirTabela").hide();
     $("#exibirArtista").show();
     
@@ -127,7 +127,7 @@ function listaMusicas(nomeArtista,artista){
         var i;
         var todasMusicas = '';
         for(i=0; i < list.artist.toplyrics.item.length; i++){
-            todasMusicas += '<tr><td>' + artista + '</td>' + '<td>' + list.artist.toplyrics.item[i].desc + '</td>' + '<td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></td></tr>';
+            todasMusicas += '<tr><td>' + artista + '</td>' + '<td>' + list.artist.toplyrics.item[i].desc + '</td>' + '<td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-type="artista&musica" data-artista="' + artista + '" data-musica="' + list.artist.toplyrics.item[i].desc + '"></span></td></tr>';
         }
         $("#corpoTabela").html(todasMusicas);
         $("#headTabela").html("<tr><th>Artista/Banda</th><th>Músicas</th><th>Detalhes</th></tr>");
@@ -149,7 +149,7 @@ function listaAlbuns (nomeArtista){
     })
 }
 
-function modalAlbum (nomeArtista,artista){
+/*function modalAlbum (nomeArtista,artista){
     var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
     $.getJSON(host.urlArtista+nomeArtistaComHifen+"/discografia/index.js", function (list){
         var linkCapa = list.discography.item.cover
@@ -161,7 +161,8 @@ function modalAlbum (nomeArtista,artista){
             musicasAlbum += '<tr><td>' + list.discography.item.discs[i].desc + '</td></tr>';
         }
         $("#musicasAlbum").html(musicasAlbum);
-}
+    })
+}*/
 
 function telaInicial() {
     $("#exibirTabela").hide();  
@@ -180,6 +181,19 @@ $(document).ready(function(){
     $("#btnVoltar").click(function(){
         telaInicial();
     });
+    $('#exibirTabela').on('click', '.glyphicon-plus-sign', function(){
+        if($(this).data('type')==='art&mus'){
+            var artista = $(this).data('art');
+            var musica = $(this).data('mus');
+            chamaArtistaEMusica(artista, musica);
+        }
+        else if ($(this).data('type')==='artista&musica'){
+            var artista = $(this).data('artista');
+            var musica = $(this).data('musica');
+            chamaArtistaEMusica(artista, musica);
+        }
+    })
+
 });
 
 $(document).keypress(function(e) {
