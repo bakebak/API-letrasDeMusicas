@@ -1,7 +1,8 @@
 var host = {urlArtista:"https://www.vagalume.com.br/",
             urlArtistaNaoEncontrado:"https://api.vagalume.com.br/search.art?q=",
             urlNomeMusica:"https://api.vagalume.com.br/search.excerpt?q=",
-            urlArtistaMusica:"https://api.vagalume.com.br/search.php?art="};
+            urlArtistaMusica:"https://api.vagalume.com.br/search.php?art=",
+            chave:"&apikey={4f136ef8868e60873283c355c01d4de8}"};
 
 function setaValores(){
     var entradaMusica = $("#digitaMusica").val();
@@ -29,51 +30,55 @@ function seleciona(entradaMusica, entradaArtista, entradaComHifen, entradaComEsp
 }
 
 function chamaArtista (entradaComHifen){
-   $.getJSON(host.urlArtistaNaoEncontrado+entradaComHifen+"&limit=5", function (list){
+   $.getJSON(host.urlArtistaNaoEncontrado+entradaComHifen+"&limit=10", function (list){
         var banda = '';
         var i;
         for(i=0; i < list.response.docs.length; i++){
-            banda += list.response.docs[i].band;
+            banda += '<tr><td>' + list.response.docs[i].band + '</td></tr>';
         }
-        $("#telaResultado").html(banda);
+        $("#corpoTabela").html(banda);
+        $("#headTabela").html("<tr><th>Artista/Banda</th></tr>");
+        $("#exibirTabela").show();
     })
 }
 
 function chamaMusica(entradaComEspaco) {
     $.getJSON(host.urlNomeMusica+entradaComEspaco+"&limit=5", function (list){
-        var trecho = '';
-        var artista = '';
+        var artistaETrecho = '';
         var i;
         for(i=0; i < list.response.docs.length; i++){
-            artista += list.response.docs[i].band;
+            artistaETrecho += '<tr><td>' + list.response.docs[i].band + '</td>';
+            artistaETrecho += '<td>' + list.response.docs[i].title + '</td></tr>';
         }
-        for(i=0; i < list.response.docs.length; i++){
-            trecho += list.response.docs[i].title;
-        }
-        $("#telaResultado").html(artista+trecho);
+        $("#corpoTabela").html(artistaETrecho);
+        $("#headTabela").html("<tr><th>Artista/Banda</th><th>Músicas</th><th>Detalhes</th></tr>");
+        $("#exibirTabela").show();
     })
 }
 
 function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
-    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+host.chave, function (list){
         var artista = '';
         var musica = '';
         artista += list.art.name;
         musica += list.mus[0].name;
-        $("#telaResultado").html(artista+musica);
         $(".escreveNomeDaBanda").html(artista);
         $(".escreveNomeDaMusica").html(musica);
+        nomeArtista = artista;
         $("#btnListaDeMusicas").click(function(){
             listaMusicas(nomeArtista);
         });
-        nomeArtista = artista;
+        $("#btnAlbuns").click(function(){
+            listaAlbuns(nomeArtista);
+        });    
     })
     escreveLetra();
+    $("#exibirTabela").hide();
     $("#exibirArtista").show();
 }
 
 function escreveLetra(entradaComHifen,entradaComEspaco){
-    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+host.chave, function (list){
         var letra = '';
         letra += list.mus[0].text;
         var letra = letra.replace(/\n/gi, "<br>");
@@ -82,7 +87,7 @@ function escreveLetra(entradaComHifen,entradaComEspaco){
 }
 
 function escreveLetraTraduzida(entradaComHifen,entradaComEspaco){
-    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+"&apikey={4f136ef8868e60873283c355c01d4de8}", function (list){
+    $.getJSON(host.urlArtistaMusica+entradaComHifen+"&mus="+entradaComEspaco+host.chave, function (list){
         var letra = '';
         letra += list.mus[0].translate[0].text;
         var letra = letra.replace(/\n/gi, "<br>");
@@ -92,14 +97,29 @@ function escreveLetraTraduzida(entradaComHifen,entradaComEspaco){
 
 function listaMusicas(nomeArtista){
     var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
-    console.log(nomeArtistaComHifen);
     $.getJSON(host.urlArtista+nomeArtistaComHifen+"/index.js", function (list){
         var i;
-        var musicas = '';
+        var todasMusicas = '';
         for(i=0; i < list.artist.toplyrics.item.length; i++){
-            musicas += list.artist.toplyrics.item[i].desc;
+            todasMusicas += '<tr><td>' + nomeArtista + '</td>' + '<td>' + list.artist.toplyrics.item[i].desc; + '</td></tr>'
         }
-        $("#telaResultado").html(nomeArtista+musicas);
+        $("#corpoTabela").html(todasMusicas);
+        $("#headTabela").html("<tr><th>Artista/Banda</th><th>Músicas</th><th>Detalhes</th></tr>");
+        $("#exibirTabela").show();
+    })
+}
+
+function listaAlbuns (nomeArtista){
+    var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
+     $.getJSON(host.urlArtista+nomeArtistaComHifen+"/discografia/index.js", function (list){
+         var i;
+         var albuns = '';
+        for(i=0; i < list.discography.item.length; i++){
+            albuns += '<tr><td>' + list.discography.item[i].desc; + '</td></tr>'
+        }
+        $("#corpoTabela").html(albuns);
+        $("#headTabela").html("<tr><th>Albuns</th><th>Detalhes</th></tr>");
+        $("#exibirTabela").show();
     })
 }
 
