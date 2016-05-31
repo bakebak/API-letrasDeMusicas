@@ -148,3 +148,6 @@
   textarea {
       resize: none;
   }
+  .glyphicon-plus-sign{
+    cursor:pointer
+  }

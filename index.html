@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>API Vagalume</title>
+        <title>CMM</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <div id="divPesquisa" class="bg-1">
             <div class="container">
                 <h1 class="text-center">CMM</h1>
-                <p class="text-center">Você pode procurar as letras das suas músicas prediletas e muitas outras coisas aqui!</p>    
+                <p class="text-center">Você pode procurar as letras das suas músicas prediletas aqui!</p>    
                 <div class="row text-center">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-4" class="text-center">
@@ -41,7 +39,6 @@
             </div>
         </div>
         <div id="containerResultado" class="bg-2">
-            <div id="telaResultado"></div>
             <div class="container" id="exibirTelaInicial"></div>
             <div id="exibirArtista">
                 <div class="row text-center">
@@ -93,6 +90,35 @@
                                 </div>
                                 <div>
                                     <button type="submit" id="btnTraduzir" class="btn btn-danger btn-block">Tradução (se disponível)</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-remove"></span> Fechar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Album -->
+                <div class="modal fade" id="myModalAlbum" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <div class="escreveNomeDaBanda"></div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                   <div id="capaAlbum"></div>
+                                </div>
+                                <div id="nomeGrupo"></div>
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>Músicas</thead>
+                                        <tbody id="musicasAlbum">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="modal-footer">
