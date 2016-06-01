@@ -93,7 +93,7 @@ function botoes(nomeArtista,artista){
 	});
 	$("#btnAlbuns").click(function(){
 		listaAlbuns(nomeArtista);
-	}); 
+	});
 }
 
 function escreveLetra(entradaComHifen,entradaComEspaco){
@@ -127,7 +127,9 @@ function listaMusicas(nomeArtista,artista){
 }
 
 function listaAlbuns (nomeArtista){
-	var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
+		
+	var nomeArtistaComHifen = '';
+	nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
 	$.getJSON(host.urlRequisicoesAdicionais + nomeArtistaComHifen + "/discografia/index.js", function (list){
 		var albuns = '';
 		for(var i=0; i < list.discography.item.length; i++){
