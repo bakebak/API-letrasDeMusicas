@@ -144,7 +144,8 @@ function modalAlbum (nomeArtista,album){
     var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
     $.getJSON(host.urlArtista+nomeArtistaComHifen+"/discografia/index.js", function (list){
         var linkCapa = list.discography.item[0].cover;
-        $("#capaAlbum").html("src='http://www.vagalume.com.br'" + linkCapa);
+        $("#capaAlbum").html("<img src=http://s2.vagalume.com" + linkCapa + ">");
+        console.log(linkCapa);
         $("#nomeAlbum").html(album);
         var musicasDoAlbum = '';
         for(var i=0; i < list.discography.item[0].discs[0].length; i++){
