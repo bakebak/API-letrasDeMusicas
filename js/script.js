@@ -5,8 +5,7 @@ var host = {urlArtista:"https://www.vagalume.com.br/",
             chave:"&apikey={4f136ef8868e60873283c355c01d4de8}"};
 
 function replaceCaracteresEspeciais(str){
-    var i;
-    for(i=0; i<str.length; i++){
+    for(var i=0; i<str.length; i++){
         str = str.replace(/[ÀÁÂÃÄÅ]/,"A");
         str = str.replace(/[àáâãäå]/,"a");
         str = str.replace(/[ÈÉÊË]/,"E");
@@ -73,8 +72,7 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
         var musica = list.mus[0].name;
         $(".escreveNomeDaBanda").html(artista);
         $(".escreveNomeDaMusica").html(musica);
-        mudaCaracteres(artista);
-        
+        mudaCaracteres(artista); 
     })
     $("#btnLetraMusica").click(function(){
         escreveLetra(entradaComHifen,entradaComEspaco);
@@ -151,13 +149,14 @@ function modalAlbum (nomeArtista,album){
         var musicasDoAlbum = '';
         for(var i=0; i < list.discography.item[0].discs[0].length; i++){
             musicasDoAlbum += '<tr><td>' + list.discography.item[0].discs[0][i].desc + '</td></tr>';
-        }        $("#musicasAlbum").html(musicasDoAlbum);
+        }        
+        $("#musicasAlbum").html(musicasDoAlbum);
     })
 }
 
 function montaTabela (corpo,artista,musica,detalhes){
     $("#corpoTabela").html(corpo);
-    $("#headTabela").html("<tr><th>" + artista+ "</th><th>" + musica + "</th><th>" + detalhes + "</th></tr>");
+    $("#headTabela").html("<tr><th>" + artista + "</th><th>" + musica + "</th><th>" + detalhes + "</th></tr>");
     $("#exibirTabela").show();
 }
 
@@ -194,7 +193,5 @@ $(document).ready(function(){
 });
 
 $(document).keypress(function(e) {
-    if (e.which == 13) {
-         setaValores();
-    }
+    if (e.which == 13) {setaValores();}
 });
