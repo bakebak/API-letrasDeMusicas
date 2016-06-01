@@ -141,7 +141,7 @@ function modalAlbum (nomeArtista,album,id){
 	$("#ModalAlbum").modal("show")
 	var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
 	$.getJSON(host.urlRequisicoesAdicionais + nomeArtistaComHifen + "/discografia/index.js", function (list){
-		var linkCapa = list.discography.item[0].cover;
+		var linkCapa = list.discography.item[id].cover;
 		$("#capaAlbum").html("<img src=http://s2.vagalume.com" + linkCapa + ">");
 		$("#nomeAlbum").html(album);
 		var musicasDoAlbum = '';
