@@ -1,144 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>CMM</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div id="divPesquisa" class="bg-1">
-            <div class="container">
-                <h1 class="text-center">CMM</h1>
-                <p class="text-center">Você pode procurar as letras das suas músicas prediletas aqui!</p>    
-                <div class="row text-center">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-4" class="text-center">
-                        <div class="thumbnail" class="text-center">
-                            <p><strong>Artista/banda:</strong></p>
-                            <input type="text" class="form-control" placeholder="Digite o nome do artista que procura" id="digitaArtista">
-                        </div>
-                    </div>
-                    <div class="col-sm-4" class="text-center">
-                        <div class="thumbnail" class="text-center">
-                            <p><strong>Música:</strong></p>
-                            <input type="text" class="form-control" placeholder="Digite o nome da música que procura" id="digitaMusica">
-                        </div>
-                    </div>
-                    <div class="col-sm-2" class="text-center"></div> 
-                </div>
-                <div class="row text-center">
-                    <div class="col-sm-10 text-center">
-                        <button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right">Pesquisar</button> 
-                    </div> 
-                    <div class="col-sm-2 text-center"></div>
-                </div>
-            </div>
-        </div>
-        <div id="containerResultado" class="bg-2">
-            <div class="container" id="exibirTelaInicial"></div>
-            <div id="exibirArtista">
-                <div class="row text-center">
-                    <h1 class="text-center"><div class="escreveNomeDaBanda"></div></h1>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4 text-center">
-                        <p><strong><h3>Nome da música: </strong><div class="escreveNomeDaMusica"></div></h3></p>
-                    </div>
-                    <div class="col-sm-4"></div>
-                </div>
-                <div class="row text-center">
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4 text-center">
-                        <button type="button" id="btnLetraMusica" class="btn btn-primary btn-danger btn-block">Letra da música</button>
-                    </div>
-                    <div class="col-sm-4"></div>
-                </div>
-                <br>
-                <div class="row text-center">
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-2">
-                        <button type="button" id="btnListaDeMusicas" class="btn btn-primary btn-danger btn-block">Todas as músicas</button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" id="btnAlbuns" class="btn btn-primary btn-danger btn-block">Albuns</button>
-                    </div>
-                    <div class="col-sm-4"></div>
-                </div>
-                <br>
-                <div class="row text-center">
-                    <div class="col-sm-5"></div>
-                    <div class="col-sm-2">
-                        <button type="button" id="btnVoltar" class="btn btn-primary btn-danger btn-block">Voltar</button>
-                    </div>
-                    <div class="col-sm-5"></div>
-                </div>
-                <!-- Modal letra -->
-                <div class="modal fade" id="myModalLetra" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <div class="escreveNomeDaBanda"></div>
-                                <div class="escreveNomeDaMusica"></div>
-                            </div>
-                            <div class="modal-body">
-                                <div class="text-center">
-                                   <div id="telaLetraDaMusica"></div>
-                                </div>
-                                <div>
-                                    <button type="submit" id="btnTraduzir" class="btn btn-danger btn-block">Tradução (se disponível)</button>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-remove"></span> Fechar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal Album -->
-                <div class="modal fade" id="ModalAlbum" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <div class="escreveNomeDaBanda"></div>
-                            </div>
-                            <div class="modal-body text-center">
-                                <div class="text-center">
-                                   <div id="capaAlbum"></div>
-                                </div>
-                                <h3 id="nomeAlbum"></h3>
-                                <div>
-                                    <table class="table table-striped">
-                                        <thead><strong>Músicas</strong></thead>
-                                        <tbody id="musicasAlbum">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-remove"></span> Fechar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container" id="exibirTabela">
-                <table class="table table-striped">
-                    <thead id="headTabela">
-                    </thead>
-                    <tbody id="corpoTabela">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <script src="js/script.js"></script>
-    </body>
+	<head>
+		<title>CMM</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/script.js"></script>
+	</head>
+	<body>
+		<div id="divPesquisa" class="bg-1">
+			<div class="container">
+				<h1 class="text-center">CMM</h1>
+				<p class="text-center">Você pode procurar as letras das suas músicas prediletas aqui!</p>    
+				<div class="row text-center">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4" class="text-center">
+						<div class="thumbnail" class="text-center">
+							<p><strong>Artista/banda:</strong></p>
+							<input type="text" class="form-control" placeholder="Digite o nome do artista que procura" id="digitaArtista">
+						</div>
+					</div>
+					<div class="col-sm-4" class="text-center">
+						<div class="thumbnail" class="text-center">
+							<p><strong>Música:</strong></p>
+							<input type="text" class="form-control" placeholder="Digite o nome da música que procura" id="digitaMusica">
+						</div>
+					</div>
+					<div class="col-sm-2" class="text-center"></div> 
+				</div>
+				<div class="row text-center">
+					<div class="col-sm-10 text-center">
+						<button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right">Pesquisar</button> 
+					</div> 
+					<div class="col-sm-2 text-center"></div>
+				</div>
+			</div>
+		</div>
+		<div id="containerResultado" class="bg-2">
+			<div class="container" id="exibirTelaInicial"></div>
+			<div id="exibirArtista">
+				<div class="row text-center">
+					<h1 class="text-center"><div class="escreveNomeDaBanda"></div></h1>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8 text-center">
+						<p><strong><h2>Nome da música: </strong><div class="escreveNomeDaMusica"></div></h2></p>
+					</div>
+					<div class="col-sm-2"></div>
+				</div>
+				<div class="row text-center">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4 text-center">
+						<button type="button" id="btnLetraMusica" class="btn btn-primary btn-danger btn-block">Letra da música</button>
+					</div>
+					<div class="col-sm-4"></div>
+				</div>
+				<br>
+				<div class="row text-center">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-2">
+						<button type="button" id="btnListaDeMusicas" class="btn btn-primary btn-danger btn-block">Todas as músicas</button>
+					</div>
+					<div class="col-sm-2">
+						<button type="button" id="btnAlbuns" class="btn btn-primary btn-danger btn-block">Albuns</button>
+					</div>
+					<div class="col-sm-4"></div>
+				</div>
+				<br>
+				<div class="row text-center">
+					<div class="col-sm-5"></div>
+					<div class="col-sm-2">
+						<button type="button" id="btnVoltar" class="btn btn-primary btn-danger btn-block">Voltar</button>
+					</div>
+					<div class="col-sm-5"></div>
+				</div>
+				<!-- Modal letra -->
+				<div class="modal fade" id="myModalLetra" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								<div class="escreveNomeDaBanda"></div>
+								<div class="escreveNomeDaMusica"></div>
+							</div>
+							<div class="modal-body">
+								<div class="text-center">
+								   <div id="telaLetraDaMusica"></div>
+								</div>
+								<div>
+									<button type="submit" id="btnTraduzir" class="btn btn-danger btn-block">Tradução (se disponível)</button>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> Fechar
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Album -->
+				<div class="modal fade" id="ModalAlbum" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								<div class="escreveNomeDaBanda"></div>
+							</div>
+							<div class="modal-body text-center">
+								<div class="text-center">
+								   <div id="capaAlbum"></div>
+								</div>
+								<h3 id="nomeAlbum"></h3>
+								<div>
+									<table class="table table-striped">
+										<thead><strong>Músicas</strong></thead>
+										<tbody id="musicasAlbum">
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> Fechar
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container" id="exibirTabela">
+				<table class="table table-striped">
+					<thead id="headTabela">
+					</thead>
+					<tbody id="corpoTabela">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
 </html>
