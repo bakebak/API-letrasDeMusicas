@@ -70,11 +70,15 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
 		var musica = list.mus[0].name;
 		$(".escreveNomeDaBanda").html(artista);
 		$(".escreveNomeDaMusica").html(musica);
-		mudaCaracteres(artista); 
+		mudaCaracteres(artista);
+		$("#btnVideos").click(function(){
+			modalVideos(entradaComHifen,musica);
+		});
 	})
 	$("#btnLetraMusica").click(function(){
 		escreveLetra(entradaComHifen,entradaComEspaco);
 	});
+	
 	$("#exibirTabela").hide();
 	$("#exibirArtista").show();
 }
@@ -140,7 +144,7 @@ function listaAlbuns (nomeArtista){
 }
 
 function modalAlbum (nomeArtista,album,id){
-	$("#ModalAlbum").modal("show")
+	$("#ModalAlbum").modal("show");
 	var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
 	$.getJSON(host.urlRequisicoesAdicionais + nomeArtistaComHifen + "/discografia/index.js", function (list){
 		var linkCapa = list.discography.item[id].cover;
@@ -152,6 +156,10 @@ function modalAlbum (nomeArtista,album,id){
 		}
 		$("#musicasAlbum").html(musicasDoAlbum);
 	})
+}
+
+function modalVideos(entradaComHifen,musica){
+	$("#ModalVideos").modal("show");
 }
 
 function imagemArtista(nomeArtista){
