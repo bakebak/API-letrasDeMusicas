@@ -85,6 +85,7 @@ function mudaCaracteres(artista){
 	var nomeArtista = specialChars.replace(/ /gi, "-");
 	nomeArtista = nomeArtista.toLowerCase();
 	botoes(nomeArtista,artista);
+	imagemArtista(nomeArtista);
 }
 
 function botoes(nomeArtista,artista){
@@ -127,7 +128,6 @@ function listaMusicas(nomeArtista,artista){
 }
 
 function listaAlbuns (nomeArtista){
-		
 	var nomeArtistaComHifen = '';
 	nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
 	$.getJSON(host.urlRequisicoesAdicionais + nomeArtistaComHifen + "/discografia/index.js", function (list){
@@ -151,6 +151,14 @@ function modalAlbum (nomeArtista,album,id){
 			musicasDoAlbum += '<tr><td>' + list.discography.item[id].discs[0][i].desc + '</td></tr>';
 		}
 		$("#musicasAlbum").html(musicasDoAlbum);
+	})
+}
+
+function imagemArtista(nomeArtista){
+	var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
+	$.getJSON(host.urlRequisicoesAdicionais + nomeArtistaComHifen + "/index.js", function (list){
+		var	imagemArtista =  list.artist.pic_small;
+		$("#imagemArtista").html("<img src=http://s2.vagalume.com" + imagemArtista + ">");
 	})
 }
 
