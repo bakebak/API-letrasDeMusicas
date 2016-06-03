@@ -9,33 +9,72 @@
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/script.js"></script>
+		<script src="js/app.js"></script>
+		<script src="https://apis.google.com/js/client.js?onload=init"></script>
 	</head>
 	<body>
 		<div id="divPesquisa" class="bg-1">
 			<div class="container">
 				<h1 class="text-center">CMM</h1>
-				<p class="text-center">Você pode procurar as letras das suas músicas prediletas aqui!</p>    
-				<div class="row text-center">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-4" class="text-center">
-						<div class="thumbnail" class="text-center">
-							<p><strong>Artista/banda:</strong></p>
-							<input type="text" class="form-control" placeholder="Digite o nome do artista que procura" id="digitaArtista">
-						</div>
-					</div>
-					<div class="col-sm-4" class="text-center">
-						<div class="thumbnail" class="text-center">
-							<p><strong>Música:</strong></p>
-							<input type="text" class="form-control" placeholder="Digite o nome da música que procura" id="digitaMusica">
+				<p class="text-center">Você pode procurar as letras das suas músicas prediletas aqui!</p> 
+				<div class="row text-center"> 
+				<div class="col-sm-2"></div>
+					<div class="col-sm-8" class="text-center">
+						<form role="form">
+						    <label class="radio-inline">
+						      	<input type="radio" name="optradio" id="radioLetra" checked="checked">Pesquisar letra
+						    </label>
+						    <label class="radio-inline">
+						      	<input type="radio" name="optradio" id="radioYoutube">Pesquisar no YouTube
+						    </label>
+						</form>
 						</div>
 					</div>
 					<div class="col-sm-2" class="text-center"></div> 
+				</div> 
+				<div id="blocoPesquisaLetra">
+					<div class="row text-center">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-4" class="text-center">
+							<div class="thumbnail" class="text-center">
+								<p><strong>Artista/banda:</strong></p>
+								<input type="text" class="form-control" placeholder="Digite o nome do artista que procura" id="digitaArtista">
+							</div>
+						</div>
+						<div class="col-sm-4" class="text-center">
+							<div class="thumbnail" class="text-center">
+								<p><strong>Música:</strong></p>
+								<input type="text" class="form-control" placeholder="Digite o nome da música que procura" id="digitaMusica">
+							</div>
+						</div>
+						<div class="col-sm-2" class="text-center"></div> 
+					</div>
+					<div class="row text-center">
+						<div class="col-sm-10 text-center">
+							<button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right">Pesquisar</button> 
+						</div> 
+						<div class="col-sm-2 text-center"></div>
+					</div>
 				</div>
-				<div class="row text-center">
-					<div class="col-sm-10 text-center">
-						<button type="submit" id="btnPesquisar" class="btn btn-danger btn-default pull-right">Pesquisar</button> 
-					</div> 
-					<div class="col-sm-2 text-center"></div>
+				<div id="blocoPesquisaYoutube">
+					<form action="#">
+						<div class="row text-center">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-8" class="text-center">
+								<div class="thumbnail" class="text-center">
+									<p><strong>Pesquisa no youtube:</strong></p>
+									<input type="text" class="form-control" placeholder="Digite o que procura no youtube" id="digitaYoutube">
+								</div>
+							</div>
+							<div class="col-sm-2" class="text-center"></div> 
+						</div>
+						<div class="row text-center">
+							<div class="col-sm-10 text-center">
+								<button type="submit" id="btnPesquisarYoutube" class="btn btn-danger btn-default pull-right">Pesquisar</button> 
+							</div> 
+							<div class="col-sm-2 text-center"></div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -54,14 +93,6 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4 text-center">
 						<button type="button" id="btnLetraMusica" class="btn btn-primary btn-danger btn-block">Letra da música</button>
-					</div>
-					<div class="col-sm-4"></div>
-				</div>
-				<br>
-				<div class="row text-center">
-					<div class="col-sm-4"></div>
-					<div class="col-sm-4 text-center">
-						<button type="button" id="btnVideos" class="btn btn-primary btn-danger btn-block">Pesquisar no youTube</button>
 					</div>
 					<div class="col-sm-4"></div>
 				</div>
@@ -140,28 +171,25 @@
 				</div>
 			</div>
 			<!-- Modal Videos -->
-			<div class="modal fade" id="ModalVideos" role="dialog">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">×</button>
-								<div class="escreveNomeDaBanda"></div>
-								<div class="escreveNomeDaMusica"></div>
+			<!-- <div class="modal fade" id="ModalVideos" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">×</button>
+						</div>
+						<div class="modal-body text-center">
+							<div class="text-center">
+							   <div id="videos"></div>
 							</div>
-							<div class="modal-body text-center">
-								<div class="text-center">
-								   <div id="videos"></div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span> Fechar
-								</button>
-							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal">
+								<span class="glyphicon glyphicon-remove"></span> Fechar
+							</button>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="container" id="exibirTabela">
 				<table class="table table-striped">
 					<thead id="headTabela">
@@ -170,6 +198,7 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="container" id="videos"></div>
 		</div>
 	</body>
 </html>

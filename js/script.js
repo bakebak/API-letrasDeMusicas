@@ -158,10 +158,6 @@ function modalAlbum (nomeArtista,album,id){
 	})
 }
 
-function modalVideos(entradaComHifen,musica){
-	$("#ModalVideos").modal("show");
-}
-
 function imagemArtista(nomeArtista){
 	var nomeArtistaComHifen = nomeArtista.replace(/ /gi, "-");
 	$.getJSON(host.urlRequisicoesAdicionais + nomeArtistaComHifen + "/index.js", function (list){
@@ -179,10 +175,27 @@ function montaTabela (corpo,artista,musica,detalhes){
 function telaInicial() {
 	$("#exibirTabela").hide();  
 	$("#exibirArtista").hide();
+	$("#videos").show();
+	if($('#radioLetra').is(':checked')){
+		$("#blocoPesquisaLetra").show();
+		$("#blocoPesquisaYoutube").hide();
+	}
 }
 
 $(document).ready(function(){
-	telaInicial();
+	telaInicial();	
+	$('#radioLetra').click(function(){
+		$("#blocoPesquisaLetra").show();
+		$("#blocoPesquisaYoutube").hide();
+	});
+
+	$('#radioYoutube').click(function(){
+		$("#blocoPesquisaLetra").hide();
+		$("#blocoPesquisaYoutube").show();
+	});
+	$("#btnPesquisarYoutube").click(function(){
+		procuraYoutube();
+	});
 	$("#btnPesquisar").click(function(){
 		setaValores();
 	});
