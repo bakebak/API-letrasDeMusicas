@@ -78,7 +78,6 @@ function chamaArtistaEMusica (entradaComHifen,entradaComEspaco){
 	$("#btnLetraMusica").click(function(){
 		escreveLetra(entradaComHifen,entradaComEspaco);
 	});
-	
 	$("#exibirTabela").hide();
 	$("#exibirArtista").show();
 }
